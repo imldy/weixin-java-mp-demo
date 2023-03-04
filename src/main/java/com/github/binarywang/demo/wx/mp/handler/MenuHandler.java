@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.builder.outxml.ImageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -20,14 +21,21 @@ public class MenuHandler extends AbstractHandler {
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
                                     Map<String, Object> context, WxMpService weixinService,
                                     WxSessionManager sessionManager) {
-        String msg = String.format("type:%s, event:%s, key:%s",
-            wxMessage.getMsgType(), wxMessage.getEvent(),
-            wxMessage.getEventKey());
+        switch (wxMessage.getEventKey()){
+            case "wx":
+                ImageBuilder imageBuilder = WxMpXmlOutMessage.IMAGE().mediaId("ygQ4DdEnLKTOdfs6loDCFw-LVgklDzzKquwNq8bLkkgYwcqRwxywn-iQXA_6hhtb");
+                return imageBuilder.fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
+                    .build();
+            case "wxGroup":
+                ImageBuilder imageBuilder1 = WxMpXmlOutMessage.IMAGE().mediaId("ygQ4DdEnLKTOdfs6loDCF77Sh6qFvcxdHMhR9mTd5sKrVfim9e-gtr9XLUifnAIZ");
+                return imageBuilder1.fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
+                    .build();
+        }
         if (EventType.VIEW.equals(wxMessage.getEvent())) {
             return null;
         }
 
-        return WxMpXmlOutMessage.TEXT().content(msg)
+        return WxMpXmlOutMessage.TEXT().content("Hi")
             .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
             .build();
     }
