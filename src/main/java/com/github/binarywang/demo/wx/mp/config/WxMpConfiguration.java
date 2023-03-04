@@ -1,11 +1,11 @@
 package com.github.binarywang.demo.wx.mp.config;
 
+import cn.ducuat.wx.mp.api.impl.WxMpServiceHHJSImpl;
 import com.github.binarywang.demo.wx.mp.handler.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -54,7 +54,7 @@ public class WxMpConfiguration {
             throw new RuntimeException("大哥，拜托先看下项目首页的说明（readme文件），添加下相关配置，注意别配错了！");
         }
 
-        WxMpService service = new WxMpServiceImpl();
+        WxMpService service = new WxMpServiceHHJSImpl();
         service.setMultiConfigStorages(configs
             .stream().map(a -> {
                 WxMpDefaultConfigImpl configStorage;
