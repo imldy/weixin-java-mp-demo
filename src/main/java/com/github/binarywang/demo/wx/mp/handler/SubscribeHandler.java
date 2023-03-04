@@ -2,8 +2,7 @@ package com.github.binarywang.demo.wx.mp.handler;
 
 import java.util.Map;
 
-import com.github.binarywang.demo.wx.mp.eneity.UserWxInfoPO;
-import com.github.binarywang.demo.wx.mp.repository.UserWxInfoRepository;
+import com.github.binarywang.demo.wx.mp.service.WxMpUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +20,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 @Component
 public class SubscribeHandler extends AbstractHandler {
     @Autowired
-    public UserWxInfoRepository userWxInfoRepository;
+    public WxMpUserService wxMpUserService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -35,28 +34,8 @@ public class SubscribeHandler extends AbstractHandler {
             WxMpUser userWxInfo = weixinService.getUserService()
                 .userInfo(wxMessage.getFromUser(), null);
             if (userWxInfo != null) {
-                userWxInfo.setUnionId("oKOdI67B5_qwzzLJttiCnA86lBa8");
                 this.logger.debug("获取到用户信息[{}]", userWxInfo.getUnionId());
-                boolean edit = false;
-                UserWxInfoPO userWxInfoPO = userWxInfoRepository.findFirstByUid(userWxInfo.getUnionId());
-                if (userWxInfoPO == null) {
-                    userWxInfoPO = new UserWxInfoPO();
-                    userWxInfoPO.setUid(userWxInfo.getUnionId());
-                    userWxInfoPO.setMpOpenID(userWxInfo.getOpenId());
-                    edit = true;
-                } else {
-                    if (userWxInfoPO.getMpOpenID() == null) {
-                        userWxInfoPO.setMpOpenID(userWxInfo.getOpenId());
-                        edit = true;
-                    }
-                    if (userWxInfoPO.getUid() == null) {
-                        userWxInfoPO.setUid(userWxInfo.getUnionId());
-                        edit = true;
-                    }
-                }
-                if (edit) {
-                    UserWxInfoPO save = userWxInfoRepository.save(userWxInfoPO);
-                }
+                wxMpUserService.trySave(userWxInfo);
             }
         } catch (WxErrorException e) {
             if (e.getError().getErrorCode() == 48001) {
