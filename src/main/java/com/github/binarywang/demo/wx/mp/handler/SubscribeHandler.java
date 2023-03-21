@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.github.binarywang.demo.wx.mp.service.WxMpUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.github.binarywang.demo.wx.mp.builder.TextBuilder;
@@ -21,6 +22,8 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 public class SubscribeHandler extends AbstractHandler {
     @Autowired
     public WxMpUserService wxMpUserService;
+    @Value("${wx.mp.subscribe.reply.text}")
+    private String reply;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -56,7 +59,7 @@ public class SubscribeHandler extends AbstractHandler {
         }
 
         try {
-            return new TextBuilder().build("感谢关注", wxMessage, weixinService);
+            return new TextBuilder().build(reply, wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }
