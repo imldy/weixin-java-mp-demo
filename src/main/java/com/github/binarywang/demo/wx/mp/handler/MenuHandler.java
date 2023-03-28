@@ -27,7 +27,7 @@ public class MenuHandler extends AbstractHandler {
                 return imageBuilder.fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
                     .build();
             case "wxGroup":
-                ImageBuilder imageBuilder1 = WxMpXmlOutMessage.IMAGE().mediaId("ygQ4DdEnLKTOdfs6loDCF77Sh6qFvcxdHMhR9mTd5sKrVfim9e-gtr9XLUifnAIZ");
+                ImageBuilder imageBuilder1 = WxMpXmlOutMessage.IMAGE().mediaId("ygQ4DdEnLKTOdfs6loDCF0uE-K0jq1S--cHBGul4LKqhjuCJvThCmKVGbAtJfutb");
                 return imageBuilder1.fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
                     .build();
         }
