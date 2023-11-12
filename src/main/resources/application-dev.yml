@@ -1,0 +1,20 @@
+ruoyi:
+  profile: ./ruoyi/uploadPath
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: HHJS
+logging:
+  level:
+    org.springframework.data.mongodb.core: debug
+wx:
+  mp:
+    configs:
+        - appId: wx89171c13c16b80a4 # 第一个公众号的appid
+          secret: 4b1df1e0bfe4d9149c82915f5f5b7ba4 # 公众号的appsecret
+          token: test # 接口配置里的Token值
+        - appId: wxec313ff86a0a837a # 第二个公众号的appid，以下同上
+          secret: 8db28430d4628cdaa4f24b3c35538a8f
+          token: 111
