@@ -33,7 +33,7 @@
         <dependency>
             <groupId>cn.duducat</groupId>
             <artifactId>WxJava-TokenServer</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
